@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onwards – Final Words</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>✌️</text></svg>">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: white;
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      color: #1a1a1a;
+    }
+    
+    .container {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      text-align: center;
+      margin: 0;
+      padding: 2rem 1rem;
+      background: white;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .header h1 {
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #1a1a1a;
+    }
+    
+    .header p {
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 0;
+      border: none;
+      padding: 0;
+      margin: 0;
+      box-shadow: none;
+    }
+    
+    #display-mode {
+      font-family: Georgia, serif;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #1a1a1a;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    #display-mode-after {
+      font-family: Georgia, serif;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #1a1a1a;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    #edit-panel {
+      display: none;
+    }
+    
+    .password-prompt {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    
+    .password-prompt p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+    
+    .password-input-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+    
+    input[type="password"] {
+      flex: 1;
+      padding: 0.75rem;
+      border: 0.5px solid #d0d0d0;
+      border-radius: 6px;
+      font-size: 14px;
+      background: #f9f9f9;
+    }
+    
+    input[type="password"]:focus {
+      outline: none;
+      border-color: #4a90e2;
+      background: white;
+    }
+    
+    textarea {
+      width: 100%;
+      height: 400px;
+      padding: 12px;
+      border: 0.5px solid #d0d0d0;
+      border-radius: 6px;
+      font-family: Georgia, serif;
+      font-size: 16px;
+      line-height: 1.8;
+      resize: none;
+      background: #f9f9f9;
+      color: #1a1a1a;
+    }
+    
+    textarea:focus {
+      outline: none;
+      border-color: #4a90e2;
+      background: white;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 1rem 2rem;
+      background: white;
+      border-top: 1px solid #eee;
+    }
+    
+    button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    
+    .btn-primary {
+      background: #4a90e2;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #357abd;
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: #4a90e2;
+      border: 0.5px solid #4a90e2;
+    }
+    
+    .btn-secondary:hover {
+      background: #f0f4f8;
+    }
+    
+    .btn-danger {
+      background: transparent;
+      color: #d32f2f;
+      border: 0.5px solid #d32f2f;
+    }
+    
+    .btn-danger:hover {
+      background: #ffebee;
+    }
+    
+    .feedback {
+      text-align: center;
+      padding: 1rem 2rem;
+      font-size: 13px;
+      color: #4caf50;
+      opacity: 0;
+      transition: opacity 0.3s;
+      height: auto;
+      background: white;
+      border-top: 1px solid #eee;
+    }
+    
+    .feedback.show {
+      opacity: 1;
+    }
+    
+    .error {
+      color: #d32f2f;
+    }
+    
+    .edit-mode-label {
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      background: #fffbea;
+      border-radius: 4px;
+      border-left: 3px solid #ffc107;
+    }
+    
+    .life-chart {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+    
+    .life-chart-subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+      padding: 1rem 2rem;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      font-weight: 500;
+    }
+    
+    .weeks-grid-container {
+      display: flex;
+      gap: 0;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      padding-right: 2rem;
+    }
+    
+    .year-labels {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      background: white;
+      min-width: 45px;
+      flex-shrink: 0;
+    }
+    
+    .year-label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      font-size: 10px;
+      color: #999;
+      font-weight: 400;
+      border-right: 1px solid #eee;
+      min-height: 0;
+    }
+    
+    .year-label.decade {
+      color: #666;
+      font-weight: 500;
+      font-size: 11px;
+    }
+    
+    .weeks-grid {
+      display: grid;
+      grid-template-columns: repeat(52, 1fr);
+      gap: 2px;
+      padding: 0;
+      background: white;
+      border-radius: 0;
+      flex: 1;
+      aspect-ratio: auto;
+    }
+    
+    .week-dot {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: white;
+    }
+    
+    .week-dot:hover {
+      transform: scale(1.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    
+    .week-age-20 {
+      background: #4facfe;
+      border-color: #4facfe;
+    }
+    
+    .week-age-40 {
+      background: #43e97b;
+      border-color: #43e97b;
+    }
+    
+    .week-age-60 {
+      background: #f5af19;
+      border-color: #f5af19;
+    }
+    
+    .life-chart-milestones {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      padding: 1.5rem 2rem;
+      flex-wrap: wrap;
+      background: white;
+      border-top: 1px solid #eee;
+    }
+    
+    .milestone {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    
+    .milestone-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+    }
+    
+    .milestone-age-20 {
+      background: #4facfe;
+      border-color: #4facfe;
+    }
+    
+    .milestone-age-40 {
+      background: #43e97b;
+      border-color: #43e97b;
+    }
+    
+    .milestone-age-60 {
+      background: #f5af19;
+      border-color: #f5af19;
+    }
+    
+    .week-age-60 {
+      background: #f5af19;
+      border-color: #f5af19;
+    }
+    
+    .week-age-plus {
+      background: #ff6b6b;
+      border-color: #ff6b6b;
+    }
+    
+    .milestone-age-plus {
+      background: #ff6b6b;
+      border-color: #ff6b6b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Onwards</h1>
+      <p>A final note on the way out</p>
+    </div>
+    
+    <div class="card">
+      <div id="display-mode"></div>
+      
+      <div id="timeline-chart" style="margin: 2rem 0;"></div>
+      
+      <div id="display-mode-after"></div>
+      
+      <div id="edit-panel">
+        <div class="edit-mode-label">✏️ Edit mode (password protected)</div>
+        <textarea id="notes-input" placeholder="Your words here..." spellcheck="true"></textarea>
+      </div>
+    </div>
+    
+    <div class="button-group">
+      <button id="edit-btn" class="btn-primary">Edit (password required)</button>
+      <button id="copy-btn" class="btn-secondary" style="display: none;">Copy link</button>
+    </div>
+    
+    <div class="feedback" id="feedback"></div>
+    
+    <div id="password-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+      <div class="card password-prompt">
+        <p>Enter password to edit</p>
+        <div class="password-input-group">
+          <input type="password" id="password-input" placeholder="Password" />
+          <button class="btn-primary" id="unlock-btn">Unlock</button>
+        </div>
+        <button class="btn-secondary" id="cancel-btn">Cancel</button>
+        <div id="password-error" style="color: #d32f2f; font-size: 13px; margin-top: 0.5rem;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const PASSWORD = "kodedigital"; // Password protected
+    const STORAGE_KEY = "leaving-notes-content";
+    
+    const defaultNotes = `TL;DR: Zero coding skills 👉 AI speedrun 👉 built actual projects 💀 life hack unlocked fr fr. Don't use AI to be lazy or ur cooked. You already got it all, just gotta start. Thanks fam 🙏💯
+
+---
+
+To my team,
+
+When I started as a digital marketing intern fresh out of a psychology degree, I didn't have a clear roadmap. What I had was curiosity and the willingness to learn. That curiosity has been the thread running through everything that came after.
+
+I came in with absolutely no coding background. Zero. I didn't think I'd ever be comfortable with automation, databases, or anything that required technical thinking. But then I discovered n8n, and with the help of AI tools breaking things down for me, something clicked. I went from being intimidated by code to building real automation workflows—Google Maps email crawlers, bulk email sending systems, things that actually worked. That shift from "I can't do that" to "I built that" is something I'll carry with me forever.
+
+And here's what I want to emphasize: I'm telling you about my lack of coding background not to brag, but to remind you of something crucial. If I can do it, so can you. With any skill, any goal, any dream—you are capable of achieving it as long as you're willing to put in the mind and effort. The barrier isn't talent or background; it's willingness.
+
+AI was my accelerator. It didn't replace my effort; it multiplied it. I used it to learn faster, to solve problems more efficiently, to build things I could only imagine before. But here's the distinction that matters: AI was a tool for my growth, not a shortcut to avoid growth.
+
+Use AI to work smarter, not to become comfortable. Use it to free up time so you can tackle harder problems, learn deeper skills, and create real value. But never let it become a crutch that makes you lazy or complacent. The moment you stop pushing, you start shrinking. Don't use AI to replace yourself so you can do something else that doesn't bring direct value to you. Because that's how you become lazy. That's how you lose momentum. Tools amplify who you are—if you're committed, they help you soar; if you're comfortable coasting, they just make coasting easier.
+
+The journey from digital marketing intern to marketer to automation builder taught me that growth doesn't follow a straight line. It branches. It surprises you. You don't have to be perfect at something to be valuable—you just have to be willing to learn and willing to put in the work.
+
+My time in sales was humbling. I didn't dominate in that space, and I'm honest about that. But I'm grateful for every lesson it taught me. And I'm especially grateful to Willy, who guided me through those moments with patience and belief in my potential.
+
+I leave behind projects I'm proud of—tools that work, systems that scale, and skills I never thought I'd have. But more than that, I hope I've left a positive mark on each of you. Whether through the work I contributed, the problems we solved together, or simply by showing up with genuine curiosity and a willingness to grow—my hope is that I've helped you develop, learn, and believe in your own potential.
+
+If this journey of mine taught me anything, it's that impact isn't always measurable. It lives in the person who feels seen, the team member who gained confidence after a conversation, the challenge we overcame together. I hope I've been that person for someone here.
+
+You have everything you need within you right now. The skills will follow. The tools will follow. But the commitment, the effort, the willingness to be uncomfortable—that has to come from you. Don't wait for the perfect moment. Don't wait until you feel ready. Start now. Push yourself. Grow.
+
+Life is finite. If you've got big dreams, the time to start isn't tomorrow—it's now. Every week that passes is a week you can't get back. Make it count.
+
+Thank you for letting me be part of this chapter. Here's to continuous learning, genuine connections, and the courage to keep growing into who you're meant to become.
+
+All my best,
+[Your Name]`;
+
+    const displayMode = document.getElementById('display-mode');
+    const displayModeAfter = document.getElementById('display-mode-after');
+    const editPanel = document.getElementById('edit-panel');
+    const notesInput = document.getElementById('notes-input');
+    const editBtn = document.getElementById('edit-btn');
+    const copyBtn = document.getElementById('copy-btn');
+    const feedback = document.getElementById('feedback');
+    const passwordModal = document.getElementById('password-modal');
+    const passwordInput = document.getElementById('password-input');
+    const unlockBtn = document.getElementById('unlock-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const passwordError = document.getElementById('password-error');
+    
+    // Split point for chart
+    const chartSplitText = "Life is finite.";
+
+    // Life in weeks calculation
+    function renderLifeChart() {
+      const timelineChart = document.getElementById('timeline-chart');
+      const totalWeeks = 90 * 52; // 90 years life expectancy
+      
+      const week20 = 20 * 52;  // 1040
+      const week40 = 40 * 52;  // 2080
+      const week60 = 60 * 52;  // 3120
+      
+      let yearLabelsHtml = '';
+      for (let year = 1; year <= 90; year++) {
+        const isDecade = year % 10 === 0;
+        yearLabelsHtml += '<div class="year-label' + (isDecade ? ' decade' : '') + '">' + (isDecade ? year : '') + '</div>';
+      }
+      
+      let html = `
+        <div class="life-chart">
+          <div class="life-chart-subtitle">Each row = 1 year</div>
+          <div class="weeks-grid-container">
+            <div class="year-labels">
+              ${yearLabelsHtml}
+            </div>
+            <div class="weeks-grid">
+      `;
+      
+      // Generate week dots
+      for (let i = 0; i < totalWeeks; i++) {
+        let dotClass = 'week-dot';
+        let title = 'Week ' + (i + 1);
+        
+        // Determine which age group this week belongs to
+        if (i < week20) {
+          dotClass += ' week-age-20';
+          title = 'Ages 0-20';
+        } else if (i < week40) {
+          dotClass += ' week-age-40';
+          title = 'Ages 20-40';
+        } else if (i < week60) {
+          dotClass += ' week-age-60';
+          title = 'Ages 40-60';
+        } else {
+          dotClass += ' week-age-plus';
+          title = 'Ages 60+';
+        }
+        
+        html += '<div class="' + dotClass + '" title="' + title + '"></div>';
+      }
+      
+      html += `
+            </div>
+          </div>
+          
+          <div class="life-chart-milestones">
+            <div class="milestone">
+              <div class="milestone-dot milestone-age-20"></div>
+              <span>Ages 0-20</span>
+            </div>
+            <div class="milestone">
+              <div class="milestone-dot milestone-age-40"></div>
+              <span>Ages 20-40</span>
+            </div>
+            <div class="milestone">
+              <div class="milestone-dot milestone-age-60"></div>
+              <span>Ages 40-60</span>
+            </div>
+            <div class="milestone">
+              <div class="milestone-dot milestone-age-plus"></div>
+              <span>Ages 60+</span>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      timelineChart.innerHTML = html;
+    }
+
+    // Initialize
+    function init() {
+      renderLifeChart();
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const content = saved || defaultNotes;
+      
+      // Split content at chart split point
+      const splitIndex = content.indexOf(chartSplitText);
+      let beforeChart, afterChart;
+      
+      if (splitIndex !== -1) {
+        beforeChart = content.substring(0, splitIndex);
+        afterChart = content.substring(splitIndex);
+      } else {
+        beforeChart = content;
+        afterChart = '';
+      }
+      
+      notesInput.value = content;
+      displayMode.textContent = beforeChart;
+      displayModeAfter.textContent = afterChart;
+    }
+
+    function showFeedback(message, isError = false) {
+      feedback.textContent = message;
+      feedback.className = 'feedback show' + (isError ? ' error' : '');
+      setTimeout(() => {
+        feedback.className = 'feedback';
+      }, 3000);
+    }
+
+    function saveNotes() {
+      localStorage.setItem(STORAGE_KEY, notesInput.value);
+      
+      // Split content at chart split point
+      const content = notesInput.value;
+      const splitIndex = content.indexOf(chartSplitText);
+      let beforeChart, afterChart;
+      
+      if (splitIndex !== -1) {
+        beforeChart = content.substring(0, splitIndex);
+        afterChart = content.substring(splitIndex);
+      } else {
+        beforeChart = content;
+        afterChart = '';
+      }
+      
+      displayMode.textContent = beforeChart;
+      displayModeAfter.textContent = afterChart;
+      editPanel.style.display = 'none';
+      editBtn.textContent = 'Edit (password required)';
+      showFeedback('✓ Saved');
+    }
+
+    function enterEditMode() {
+      if (PASSWORD === "") {
+        showFeedback('❌ Password not set. Ask the owner to add a password to the HTML file.', true);
+        return;
+      }
+      passwordModal.style.display = 'flex';
+      passwordInput.focus();
+    }
+
+    function attemptUnlock() {
+      if (passwordInput.value === PASSWORD) {
+        passwordModal.style.display = 'none';
+        displayMode.style.display = 'none';
+        editPanel.style.display = 'block';
+        editBtn.textContent = 'Done editing';
+        notesInput.focus();
+        passwordInput.value = '';
+        passwordError.textContent = '';
+      } else {
+        passwordError.textContent = 'Incorrect password';
+      }
+    }
+
+    editBtn.addEventListener('click', () => {
+      if (editPanel.style.display === 'none' || editPanel.style.display === '') {
+        enterEditMode();
+      } else {
+        saveNotes();
+      }
+    });
+
+    unlockBtn.addEventListener('click', attemptUnlock);
+    passwordInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') attemptUnlock();
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      passwordModal.style.display = 'none';
+      passwordInput.value = '';
+      passwordError.textContent = '';
+    });
+
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showFeedback('✓ Link copied');
+      });
+    });
+
+    init();
+  </script>
+</body>
+</html>
